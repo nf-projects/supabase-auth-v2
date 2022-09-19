@@ -158,6 +158,7 @@ export default function SignIn() {
                 justify={"space-between"}
               >
                 <Link color={"blue.400"}>Forgot password?</Link>
+                <Link href="/signup"color={"blue.400"}>No account yet?</Link>
               </Stack>
             </Stack>
           </Stack>
