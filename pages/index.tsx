@@ -8,8 +8,7 @@ import { supabase } from "../utils/SupabaseClient.js";
 const Home: NextPage = () => {
   return (
     <div>
-      <h1>Test</h1>
-      <h2>Hi</h2>
+      
     </div>
   );
 };
