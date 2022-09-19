@@ -40,7 +40,7 @@ export default function SignUp() {
     if (error) {
       alert(JSON.stringify(error));
     } else {
-      router.push("/signin");
+      router.push("/confirm-email");
     }
   };
 
