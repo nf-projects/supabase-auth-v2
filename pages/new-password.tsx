@@ -8,10 +8,13 @@ import {
   Stack,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { supabase } from "../utils/SupabaseClient";
 
 export default function NewPassword(): JSX.Element {
+  const router = useRouter();
+
   const [password, setPassword] = useState("");
   const [emailConfirmed, setEmailConfirmed] = useState(false);
 
@@ -29,7 +32,7 @@ export default function NewPassword(): JSX.Element {
         password: password,
       });
 
-      if (data) alert("Password updated successfully!");
+      if (data) router.push("/new-password-success");
       if (error) alert(JSON.stringify(error));
     } else {
       alert("Error: Email is not confirmed!");
