@@ -9,18 +9,21 @@ import {
   InputRightElement,
   Stack,
   Button,
+  Center,
   Heading,
   Text,
   useColorModeValue,
   Link,
 } from "@chakra-ui/react";
 
-import { MouseEventHandler, useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { FcGoogle } from "react-icons/fc";
+import { BsGithub } from "react-icons/bs";
 
 import { supabase } from "../utils/SupabaseClient";
 
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 export default function SignUp() {
   const router = useRouter();
@@ -43,6 +46,7 @@ export default function SignUp() {
       router.push("/confirm-email");
     }
   };
+  
 
   const handleSubmitWithGitHub = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,6 +64,23 @@ export default function SignUp() {
       alert(JSON.stringify(error));
     }
   };
+
+  const handleSubmitWithGoogle = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const { error } = await supabase.auth.signIn(
+      {
+        provider: "google",
+      },
+      {
+        redirectTo: "http://localhost:3000/callback/",
+      }
+    );
+
+    if (error) {
+      alert(JSON.stringify(error));
+    }
+  };  
 
   return (
     <Flex
@@ -84,22 +105,52 @@ export default function SignUp() {
           p={8}
         >
           <Stack spacing={4}>
+            <Stack spacing={-10}>
+            <Center p={8}>
+              <Button
+                w={"full"}
+                maxW={"md"}
+                variant={"outline"}
+                leftIcon={<FcGoogle />}
+                onClick={handleSubmitWithGoogle}
+              >
+                <Center>
+                  <Text>Sign in with Google</Text>
+                </Center>
+              </Button>              
+            </Center>
+            <Center p={8}>
+              <Button
+                w={"full"}
+                maxW={"md"}
+                variant={"outline"}
+                leftIcon={<BsGithub />}
+                onClick={handleSubmitWithGitHub}
+              >
+                <Center>
+                  <Text>Sign in with Github</Text>
+                </Center>
+              </Button>              
+            </Center>            
+            </Stack>
+
+            <hr></hr>
             <FormControl id="email" isRequired>
               <FormLabel>Email address</FormLabel>
               <Input
-               type="email" 
-               value={email}
-               onChange={(e) => setEmail(e.target.value)}  
-               />
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </FormControl>
             <FormControl id="password" isRequired>
               <FormLabel>Password</FormLabel>
               <InputGroup>
                 <Input
-                 type={showPassword ? "text" : "password"} 
-                 value={password}
-                 onChange={(e) => setPassword(e.target.value)}
-                 />
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
                 <InputRightElement h={"full"}>
                   <Button
                     variant={"ghost"}
